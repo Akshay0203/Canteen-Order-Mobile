@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "842895759507",
+    "firebase_url": "https://canteen-order.firebaseio.com",
+    "project_id": "canteen-order",
+    "storage_bucket": "canteen-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842895759507:android:268e35411f21f18e0f5566",
+        "android_client_info": {
+          "package_name": "com.nmamit.canteenorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842895759507-5rmi82mu6rcafdj4004d72i71i2srfeo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRHFnYo5ov4ST7STFD8qpM4YZxaB6k2zQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842895759507-5rmi82mu6rcafdj4004d72i71i2srfeo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
