@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderActivity"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lv_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_total"
+        android:textSize="17sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="25dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_order"
+        android:textAllCaps="false"
+        android:text="Order"
+        android:background="#009688"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="50dp"
+        android:layout_margin="40dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_status"
+        android:padding="20dp"
+        android:textSize="17sp"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"/>
+</LinearLayout>

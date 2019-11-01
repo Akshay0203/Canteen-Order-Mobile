@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="20"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_weight="14"
+            android:text="Text"
+            android:textSize="17sp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_item_name"
+            android:layout_width="0dp" />
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="2"-->
+<!--            android:layout_gravity="center_vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="qty" />-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/sp_quantity"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content" />-->
+
+<!--        </LinearLayout>-->
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="-"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:id="@+id/decrease"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="0"
+                android:gravity="center_vertical"
+                android:id="@+id/qty"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/increase"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="+"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#F23EA3F3"
+            android:textColor="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:id="@+id/bt_order"/>
+
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
