@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -69,7 +72,7 @@ public class MenuActivity extends BaseActivity {
                                 for (Map.Entry<String, String> e : menu.entrySet()) {
 //                                    itemName.add(e.getKey().toString());
 //                                    itemPrice.add(e.getValue().toString());
-                                    menuItem.add(e.getKey().toString() + "\nRs."+e.getValue().toString());
+                                    menuItem.add(e.getKey() + "\nRs."+ e.getValue());
                                 }
 //                                Toast.makeText(MenuActivity.this, menuItem.size() + "", Toast.LENGTH_SHORT).show();
                             }
@@ -108,5 +111,29 @@ public class MenuActivity extends BaseActivity {
         adapter = new MenuAdapter(this, menuItem, tvItemCount, orderedItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.sign_out)
+        {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if(item.getItemId() == R.id.order_list)
+        {
+            Intent intent = new Intent(getApplicationContext(), OrderStatusActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

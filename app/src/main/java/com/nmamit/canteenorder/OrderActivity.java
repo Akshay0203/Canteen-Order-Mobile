@@ -3,6 +3,7 @@ package com.nmamit.canteenorder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -42,7 +46,8 @@ public class OrderActivity extends BaseActivity {
     ListView itemList;// itemCount;
     TextView tvTotal,tvStatus;
     Button btOrder;
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY':'hh:mm:ss");
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy':'hh:mm:ss");
+    CardView cardView ;
     Date date;
     private static final  String PREFERENCE_FILE_KEY = "com.nmamit.canteenorder.PREFERENCE_FILE_KEY";
 
@@ -66,12 +71,15 @@ public class OrderActivity extends BaseActivity {
         btOrder  = findViewById(R.id.bt_order);
         tvStatus = findViewById(R.id.tv_status);
 
+        cardView = findViewById(R.id.status_card_view);
         sharedPref = getSharedPreferences(PREFERENCE_FILE_KEY,
                 Context.MODE_PRIVATE);
         Intent intent = getIntent();
         hotelId = intent.getStringExtra("hotelId");
         orderItems = (HashMap<String, Integer>)intent.getSerializableExtra("orderItems");
         menu = (HashMap<String, String>) intent.getSerializableExtra("menu");
+
+        cardView.setVisibility(View.GONE);
 //        String[] items = (String[]) orderItems.values().toArray();
         for(Map.Entry<String, Integer> entry : orderItems.entrySet()) {
             String[] orderItem = entry.getKey().split("\\r?\\n");
@@ -107,7 +115,7 @@ public class OrderActivity extends BaseActivity {
                 String userId = sharedPref.getString("user_email","");
                 date = new Date();
                 formattedDate = formatter.format(date);
-
+                cardView.setVisibility(View.VISIBLE);
                 tvStatus.setText("Your order is being prepared");
                 tvStatus.setBackgroundColor(Color.DKGRAY);
 
@@ -167,23 +175,25 @@ public class OrderActivity extends BaseActivity {
                                        }
                                        else if(snapshot.get("status").equals("completed")) {
                                            Log.d(TAG, "inside if completed: " + snapshot.getData().toString());
-                                           db.collection("Order")
-                                                   .document(snapshot.getId())
-                                                   .delete()
-                                                   .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                       @Override
-                                                       public void onSuccess(Void aVoid) {
-                                                           tvStatus.setText("Payment successfully done! Thank you!");
-                                                           tvStatus.setBackgroundColor(Color.GREEN);
-                                                           Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                                       }
-                                                   })
-                                                   .addOnFailureListener(new OnFailureListener() {
-                                                       @Override
-                                                       public void onFailure(@NonNull Exception e) {
-                                                           Log.w(TAG, "Error deleting document", e);
-                                                       }
-                                                   });
+//                                           db.collection("Order")
+//                                                   .document(snapshot.getId())
+//                                                   .delete()
+//                                                   .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                       @Override
+//                                                       public void onSuccess(Void aVoid) {
+//                                                           tvStatus.setText("Payment successfully done! Thank you!");
+//                                                           tvStatus.setBackgroundColor(Color.GREEN);
+//                                                           Log.d(TAG, "DocumentSnapshot successfully deleted!");
+//                                                       }
+//                                                   })
+//                                                   .addOnFailureListener(new OnFailureListener() {
+//                                                       @Override
+//                                                       public void onFailure(@NonNull Exception e) {
+//                                                           Log.w(TAG, "Error deleting document", e);
+//                                                       }
+//                                                   });
+                                           tvStatus.setText("Payment successfully done! Thank you!");
+                                           tvStatus.setBackgroundColor(Color.GREEN);
 
                                        }
 
@@ -198,4 +208,30 @@ public class OrderActivity extends BaseActivity {
             }
         });
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.sign_out)
+        {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if(item.getItemId() == R.id.order_list)
+        {
+            Intent intent = new Intent(getApplicationContext(), OrderStatusActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

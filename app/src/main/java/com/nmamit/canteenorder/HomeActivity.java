@@ -128,6 +128,13 @@ public class HomeActivity extends BaseActivity {
             startActivity(intent);
             finish();
         }
+
+        if(item.getItemId() == R.id.order_list)
+        {
+            Intent intent = new Intent(getApplicationContext(), OrderStatusActivity.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

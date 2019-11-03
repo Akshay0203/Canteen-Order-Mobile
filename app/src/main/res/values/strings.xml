@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Canteen Order</string>
     <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_order_status">OrderStatusActivity</string>
 </resources>
