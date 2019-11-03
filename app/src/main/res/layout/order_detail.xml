@@ -11,12 +11,14 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="6dp"
+        card_view:cardBackgroundColor="@color/ltgreen">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
             <TextView
                 android:id="@+id/tv_hotel_id"
                 android:layout_width="wrap_content"
@@ -49,15 +51,18 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/status_card_view"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 card_view:cardCornerRadius="4dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_ordered_status"
-                    android:padding="20dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="10dp"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"/>
             </androidx.cardview.widget.CardView>

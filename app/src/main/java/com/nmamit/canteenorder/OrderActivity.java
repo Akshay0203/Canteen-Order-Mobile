@@ -171,7 +171,7 @@ public class OrderActivity extends BaseActivity {
                                        if(snapshot.get("status").equals("paymentPending")) {
                                            Log.d(TAG, "inside if paymentPending: " + snapshot.getData().toString());
                                             tvStatus.setText("Your item is ready! Please be ready with the cash!");
-                                            tvStatus.setBackgroundColor(Color.MAGENTA);
+                                            tvStatus.setBackgroundColor(Color.CYAN);
                                        }
                                        else if(snapshot.get("status").equals("completed")) {
                                            Log.d(TAG, "inside if completed: " + snapshot.getData().toString());

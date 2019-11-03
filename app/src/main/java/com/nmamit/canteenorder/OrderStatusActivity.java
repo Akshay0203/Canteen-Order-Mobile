@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -59,15 +61,60 @@ public class OrderStatusActivity extends BaseActivity {
                 Context.MODE_PRIVATE);
         userId = sharedPref.getString("user_email","");
 
+//        showProgressDialog();
+//        db.collection("Order")
+//                .whereEqualTo("userId", userId)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            for(QueryDocumentSnapshot document : task.getResult()) {
+////                                tvHotel.setText(document.get("hotelId").toString());
+//                                hotelList.add(document.get("hotelId").toString());
+//                                bill = (List<Map<String, String>>) document.get("items");
+//                                String orderItem = new String();
+//                                for(Map<String, String> billItem : bill) {
+////                                    tvOrders.append(billItem.get("name"));
+//                                    orderItem += billItem.get("name")+"\n";
+////                                    tvOrders.append(billItem.get("price"));
+////                                    tvOrders.append(billItem.get("quantity"));
+////                                    tvOrders.append("\n");
+//                                }
+//                                orderList.add(orderItem);
+//                                costList.add(document.get("totalCost").toString());
+//                                orderTimeList.add(document.get("time")+"");
+//                                Log.d(TAG, "onComplete: status"+document.get("status").toString());
+//                                statusList.add(document.get("status").toString());
+//
+////                                tvStatus.setText(document.get("status").toString());
+//                            }
+//                            hideProgressDialog();
+//                            initAdapter();
+//                        }
+//                        else
+//                            Toast.makeText(OrderStatusActivity.this, "Couldn't reach servers", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
         showProgressDialog();
         db.collection("Order")
                 .whereEqualTo("userId", userId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .orderBy("time", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()) {
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        for(DocumentSnapshot document : snapshots) {
+                            Log.d(TAG, document.getData().toString());
+                            String source = snapshots != null && snapshots.getMetadata().hasPendingWrites()
+                                    ? "Local" : "Server";
+
+                            if (document != null && document.exists()) {
 //                                tvHotel.setText(document.get("hotelId").toString());
                                 hotelList.add(document.get("hotelId").toString());
                                 bill = (List<Map<String, String>>) document.get("items");
@@ -86,12 +133,14 @@ public class OrderStatusActivity extends BaseActivity {
                                 statusList.add(document.get("status").toString());
 
 //                                tvStatus.setText(document.get("status").toString());
+                            } else {
+                                Log.d(TAG, source + " data: null");
+                                Toast.makeText(OrderStatusActivity.this, "Couldn't reach servers", Toast.LENGTH_SHORT).show();
                             }
+
                             hideProgressDialog();
                             initAdapter();
                         }
-                        else
-                            Toast.makeText(OrderStatusActivity.this, "Couldn't reach servers", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

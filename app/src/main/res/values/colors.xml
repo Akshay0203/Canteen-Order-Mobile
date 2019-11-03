@@ -6,4 +6,7 @@
     <color name="test">#383636</color>
     <color name="green">#009688</color>
     <color name="black">#000000 </color>
+    <color name="dkgray">#FF444444</color>
+    <color name="ltgreen">#F0FAF0</color>
+    <color name="ltred">#FAE8E7</color>
 </resources>

@@ -84,7 +84,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
         if(status.equals("paymentPending")) {
             Log.d(TAG, "inside if paymentPending: ");
             holder.tvStatus.setText("Your item is ready! Please be ready with the cash!");
-            holder.tvStatus.setBackgroundColor(Color.MAGENTA);
+            holder.tvStatus.setBackgroundColor(Color.CYAN);
         }
         else if(status.equals("completed")) {
             Log.d(TAG, "inside if completed: ");
